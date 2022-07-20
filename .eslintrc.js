@@ -28,6 +28,7 @@ module.exports = {
     },
   },
   rules: {
+    'react/self-closing-comp': 0,
     'import/order': [
       'warn',
       {
