@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
+import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import {
   HStack,
@@ -39,6 +40,10 @@ export const Home = () => {
     navigation.navigate('details', { orderId });
   };
 
+  const handleSignOut = () => {
+    auth().signOut();
+  };
+
   const ListEmptyComponent = useCallback(
     () => (
       <Center>
@@ -65,7 +70,10 @@ export const Home = () => {
         px={6}
       >
         <Logo />
-        <IconButton icon={<SignOut size={26} color={colors.gray[300]} />} />
+        <IconButton
+          icon={<SignOut size={26} color={colors.gray[300]} />}
+          onPress={handleSignOut}
+        />
       </HStack>
       <VStack flex={1} px={6}>
         <HStack w="full" mt={8} mb={4} justifyContent="space-between">
