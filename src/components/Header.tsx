@@ -29,7 +29,7 @@ export const Header = ({ title, ...rest }: Props) => {
       justifyContent="space-between"
       alignItems="center"
       bg="gray.600"
-      pb={6}
+      p={6}
       pt={12}
       {...rest}
     >
