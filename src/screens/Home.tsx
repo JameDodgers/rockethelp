@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import {
   HStack,
@@ -17,20 +18,21 @@ import { SignOut, ChatTeardropText } from 'phosphor-react-native';
 import Logo from '../assets/logo_secondary.svg';
 import { Button } from '../components/Button';
 import { Filter } from '../components/Filter';
+import { Loading } from '../components/Loading';
 import { Order, OrderProps } from '../components/Order';
+import { dateFormat } from '../utils/firestoreDateFormat';
 
 export const Home = () => {
   const { colors } = useTheme();
 
   const navigation = useNavigation();
 
+  const [isLoading, setLoading] = useState(true);
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>(
     'open'
   );
 
-  const [orders, setOrders] = useState<OrderProps[]>([
-    { id: '1', patrimony: '1234', when: '18/07/2022 às 14:00', status: 'open' },
-  ]);
+  const [orders, setOrders] = useState<OrderProps[]>([]);
 
   const handleNewOrder = () => {
     navigation.navigate('new');
@@ -43,6 +45,32 @@ export const Home = () => {
   const handleSignOut = () => {
     auth().signOut();
   };
+
+  useEffect(() => {
+    setLoading(true);
+    firestore();
+
+    const subscribe = firestore()
+      .collection('orders')
+      .where('status', '==', statusSelected)
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          const { patrimony, description, status, created_at } = doc.data();
+          return {
+            id: doc.id,
+            patrimony,
+            description,
+            status,
+            when: dateFormat(created_at),
+          };
+        });
+
+        setOrders(data);
+        setLoading(false);
+      });
+
+    return subscribe;
+  }, [statusSelected]);
 
   const ListEmptyComponent = useCallback(
     () => (
@@ -94,15 +122,19 @@ export const Home = () => {
             onPress={() => setStatusSelected('closed')}
           />
         </HStack>
-        <FlatList
-          data={orders}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Order data={item} onPress={() => handleOpenDetails(item.id)} />
-          )}
-          ListEmptyComponent={ListEmptyComponent}
-        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={orders}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Order data={item} onPress={() => handleOpenDetails(item.id)} />
+            )}
+            ListEmptyComponent={ListEmptyComponent}
+          />
+        )}
         <Button title="Nova solicitação" onPress={handleNewOrder} />
       </VStack>
     </VStack>
