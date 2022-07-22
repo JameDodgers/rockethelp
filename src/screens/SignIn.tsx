@@ -26,6 +26,7 @@ export const SignIn = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .catch(({ code }) => {
+        setLoading(false);
         if (code === 'auth/invalid-email' || code === 'auth/wrong-password') {
           return Alert.alert('Entrar', 'E-mail e/ou senha inválidos');
         } else if (code === 'auth/user-not-found') {
@@ -33,9 +34,6 @@ export const SignIn = () => {
         } else {
           return Alert.alert('Entrar', 'Ocorreu algum erro.');
         }
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
