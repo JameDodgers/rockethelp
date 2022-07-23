@@ -95,7 +95,7 @@ export const Details = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [orderId]);
 
   if (isLoading) {
     return <Loading />;
