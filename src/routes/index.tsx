@@ -10,7 +10,7 @@ import { AppRoutes } from './app.routes';
 
 export const Routes = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   useEffect(() => {
     const subscribe = auth().onAuthStateChanged((response) => {

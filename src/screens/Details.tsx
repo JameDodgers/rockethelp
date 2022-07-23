@@ -25,7 +25,7 @@ type RouteParams = {
 };
 type OrderDetails = OrderProps & {
   description: string;
-  solution: string;
+  solution?: string;
   closed?: string;
 };
 export const Details = () => {
@@ -76,9 +76,9 @@ export const Details = () => {
           created_at,
           closed_at,
           solution,
-        } = doc.data();
+        } = doc.data() || ({} as OrderFirestoreDTO);
 
-        const closed = closed_at ? dateFormat(closed_at) : undefined;
+        const closed = closed_at && dateFormat(closed_at);
 
         setOrder({
           id: doc.id,
