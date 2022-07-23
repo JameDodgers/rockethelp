@@ -112,8 +112,8 @@ export const Home = () => {
           <Filter
             type="open"
             title="em andamento"
-            onPress={() => setStatusSelected('open')}
             isActive={statusSelected === 'open'}
+            onPress={() => setStatusSelected('open')}
           />
           <Filter
             type="closed"
@@ -129,10 +129,10 @@ export const Home = () => {
             data={orders}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
+            ListEmptyComponent={ListEmptyComponent}
             renderItem={({ item }) => (
               <Order data={item} onPress={() => handleOpenDetails(item.id)} />
             )}
-            ListEmptyComponent={ListEmptyComponent}
           />
         )}
         <Button title="Nova solicitação" onPress={handleNewOrder} />

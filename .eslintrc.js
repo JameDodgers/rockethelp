@@ -28,7 +28,18 @@ module.exports = {
     },
   },
   rules: {
+    '@typescript-eslint/no-shadow': 0,
     'react/self-closing-comp': 0,
+    'react/jsx-sort-props': [
+      'warn',
+      {
+        callbacksLast: true,
+        noSortAlphabetically: true,
+        shorthandFirst: true,
+        multiline: 'last',
+        reservedFirst: ['ref', 'key', 'children'],
+      },
+    ],
     'import/order': [
       'warn',
       {

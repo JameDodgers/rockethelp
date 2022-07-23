@@ -143,9 +143,9 @@ export const Details = () => {
         >
           {order.status === 'open' && (
             <Input
+              multiline
               placeholder="Descrição da solução"
               h={24}
-              multiline
               textAlignVertical="top"
               value={solution}
               onChangeText={setSolution}

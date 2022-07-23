@@ -47,20 +47,20 @@ export const SignIn = () => {
         placeholder="E-mail"
         autoCapitalize="none"
         value={email}
-        onChangeText={setEmail}
         mb={4}
         InputLeftElement={
           <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
         }
+        onChangeText={setEmail}
       />
       <Input
+        secureTextEntry
         autoCapitalize="none"
         placeholder="Senha"
-        secureTextEntry
         value={password}
-        onChangeText={setPassword}
         mb={8}
         InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
+        onChangeText={setPassword}
       />
       <Button
         title="Entrar"

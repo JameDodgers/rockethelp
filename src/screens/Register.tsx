@@ -55,19 +55,19 @@ export const Register = () => {
           onChangeText={setPatrimony}
         />
         <Input
+          multiline
           flex={1}
           mt={5}
-          multiline
           value={description}
-          onChangeText={setDescription}
           textAlignVertical="top"
           placeholder="Descrição do problema"
+          onChangeText={setDescription}
         />
         <Button
           title="Cadastrar"
           isLoading={isLoading}
-          onPress={handleNewOrderRegister}
           mt="5"
+          onPress={handleNewOrderRegister}
         />
       </VStack>
     </VStack>
