@@ -20,6 +20,7 @@ import { Button } from '../components/Button';
 import { Filter } from '../components/Filter';
 import { Loading } from '../components/Loading';
 import { Order, OrderProps } from '../components/Order';
+import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
 import { dateFormat } from '../utils/firestoreDateFormat';
 
 export const Home = () => {
@@ -51,7 +52,7 @@ export const Home = () => {
     firestore();
 
     const subscribe = firestore()
-      .collection('orders')
+      .collection<OrderFirestoreDTO>('orders')
       .where('status', '==', statusSelected)
       .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => {
